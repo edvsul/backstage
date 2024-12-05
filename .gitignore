@@ -44,6 +44,9 @@ site
 # Main configuration file
 app-config.yaml
 
+# Kuberentes files
+kubernetes/secrets/*
+
 # Local configuration files
 *.local.yaml
 
