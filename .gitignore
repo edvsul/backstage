@@ -42,7 +42,8 @@ dist-types
 site
 
 # Main configuration file
-app-config.*
+app-config.local.yaml
+app-config.yaml
 
 # Kuberentes files
 kubernetes/secrets/*
