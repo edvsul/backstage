@@ -56,7 +56,6 @@ import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 
 import {
   EntityKubernetesContent,
-  isKubernetesAvailable,
 } from '@backstage/plugin-kubernetes';
 
 const techdocsContent = (
@@ -155,11 +154,7 @@ const serviceEntityPage = (
       {cicdContent}
     </EntityLayout.Route>
 
-    <EntityLayout.Route
-      path="/kubernetes"
-      title="Kubernetes"
-      if={isKubernetesAvailable}
-    >
+    <EntityLayout.Route path="/kubernetes" title="Kubernetes">
       <EntityKubernetesContent refreshIntervalMs={30000} />
     </EntityLayout.Route>
 
@@ -201,11 +196,7 @@ const websiteEntityPage = (
       {cicdContent}
     </EntityLayout.Route>
 
-    <EntityLayout.Route
-      path="/kubernetes"
-      title="Kubernetes"
-      if={isKubernetesAvailable}
-    >
+    <EntityLayout.Route path="/kubernetes" title="Kubernetes">
       <EntityKubernetesContent />
     </EntityLayout.Route>
 
