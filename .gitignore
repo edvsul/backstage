@@ -45,6 +45,9 @@ site
 app-config.local.yaml
 app-config.yaml
 
+# K3s kubeconfig file
+k3s.yaml
+
 # Kuberentes files
 kubernetes/secrets/*
 
