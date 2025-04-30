@@ -18,6 +18,7 @@ spec:
       containers:
       - name: ubuntu
         image: ubuntu
+        imagePullPolicy: IfNotPresent
         command:
         - /bin/sh
         args:
