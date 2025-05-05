@@ -1,0 +1,116 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: apps.devopstoolkit.live
+spec:
+  defaultCompositionRef:
+    name: app-backend
+  group: devopstoolkit.live
+  names:
+    kind: App
+    plural: apps
+  versions:
+  - name: v1beta1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              image:
+                description: The container image (e.g., `ghcr.io/vfarcic/silly-demo`)
+                type: string
+              tag:
+                description: The tag of the image (e.g., `1.2.3`)
+                type: string
+              port:
+                description: The application port
+                type: integer
+                default: 80
+              host:
+                description: The host address of the application
+                type: string
+                default: devopstoolkit.live
+              ingressClassName:
+                description: The Ingress class name
+                type: string
+                default: contour
+              frontend:
+                type: object
+                description: Frontend-specific configuration
+                properties:
+                  backendUrl:
+                    description: The URL of the backend service
+                    type: string
+              db:
+                type: object
+                properties:
+                  secret:
+                    description: The name of the Secret with DB authentication.
+                    type: string
+                  storeName:
+                    description: The name of the secret store to use to pull the secret.
+                    type: string
+                  name:
+                    description: The name of the database.
+                    type: string
+              scaling:
+                type: object
+                properties:
+                  enabled:
+                    description: Whether to enable scaling
+                    type: boolean
+                    default: false
+                  min:
+                    description: Minimum number of replicas
+                    type: integer
+                    default: 1
+                  max:
+                    description: Maximum number of replicas
+                    type: integer
+                    default: 10
+              repository:
+                type: object
+                properties:
+                  enabled:
+                    description: Whether to enable a repository
+                    type: boolean
+                    default: false
+                  name:
+                    description: The name of the repository
+                    type: string
+              ci:
+                type: object
+                properties:
+                  enabled:
+                    description: Whether to enable CI. If enabled, the repository must be enabled as well.
+                    type: boolean
+                    default: false
+                  tool:
+                    description: "The type of the workflow tool. Currently supported: gha (GitHub Actions), none."
+                    type: string
+                    default: gha
+                  runTests:
+                    description: Whether to run tests
+                    type: boolean
+                    default: true
+                  buildImages:
+                    description: Whether to build container images
+                    type: boolean
+                    default: true
+            required:
+            - image
+            - tag
+          status:
+            type: object
+            properties:
+              host:
+                description: The host address of the application
+                type: string
+    additionalPrinterColumns:
+    - name: host
+      type: string
+      jsonPath: ".status.host"
